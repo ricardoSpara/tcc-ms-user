@@ -1,0 +1,17 @@
+{
+  "name": "tcc-ms-user",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/ricardoSpara/tcc-ms-user.git",
+  "author": "Ricardo Sparapan <ricardo.junior@picpay.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "knex": "^1.0.6",
+    "nodemon": "^2.0.15"
+  }
+}
