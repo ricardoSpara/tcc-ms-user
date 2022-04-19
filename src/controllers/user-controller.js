@@ -39,6 +39,19 @@ class UserController {
 
     return res.json({});
   }
+
+  async destroy(req, res) {
+    const { userId: id } = req.params;
+    const user = await db("users").where({ id }).select("*");
+
+    if (user.length === 0) {
+      return res.json({ error: "User not exists" });
+    }
+
+    await db("users").where({ id }).delete();
+
+    return res.json({});
+  }
 }
 
 module.exports = new UserController();
