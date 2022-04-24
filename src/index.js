@@ -1,8 +1,8 @@
-require('dotenv').config();
+require("dotenv").config();
 
 const express = require("express");
 const routes = require("./routes");
-const {APP_PORT} = process.env
+const { APP_PORT } = process.env;
 const app = express();
 
 app.use(express.json());
