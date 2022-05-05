@@ -1,7 +1,5 @@
 const kafka = require('./index');
 
-const producer = kafka.producer();
-
 class KafkaProducer {
     constructor() {
         this.producer = kafka.producer();
