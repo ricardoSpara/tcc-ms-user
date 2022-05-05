@@ -1,5 +1,5 @@
 const kafka = {
-  kafkaBrokers: process.env.KAFKA_BROKERS,
+  kafkaBroker: process.env.KAFKA_BROKER,
 };
 
 module.exports = kafka;

@@ -3,7 +3,7 @@ const kafkaConfig = require('../config/kafka');
 
 const kafka = new Kafka({
   clientId: process.env.APP_NAME,
-  brokers: kafkaConfig.kafkaBrokers,
+  brokers: [kafkaConfig.kafkaBroker],
 })
 
 module.exports = kafka;
