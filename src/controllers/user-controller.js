@@ -5,7 +5,7 @@ const actions = require("../config/actions");
 
 class UserController {
   async index(req, res) {
-    const users = await db('users').select('*');
+    const users = await db("users").select("*");
 
     return res.json(users);
   }
@@ -14,14 +14,14 @@ class UserController {
     const { name, email } = req.body;
     const dataToCreate = {};
 
-    const [id] = await db('users').insert({ name, email });
+    const [id] = await db("users").insert({ name, email });
 
     Object.assign(dataToCreate, {
       name,
       email,
       id,
     });
-    
+
     await kafkaProducer.sendMessages(topics.users, [
       {
         value: JSON.stringify(dataToCreate),
@@ -39,7 +39,7 @@ class UserController {
   async update(req, res) {
     const { name, email } = req.body;
     const { userId: id } = req.params;
-    const dataToUpdate = {};
+    const dataToUpdate = { id };
 
     if (name) {
       dataToUpdate.name = name;
@@ -49,25 +49,23 @@ class UserController {
       dataToUpdate.email = email;
     }
 
-    const user = await db('users').where({ id }).select('*');
+    const user = await db("users").where({ id }).select("*");
 
     if (user.length === 0) {
-      return res.json({ error: 'User not exists' });
+      return res.json({ error: "User not exists" });
     }
 
-    await db('users').where({ id }).update(dataToUpdate);
+    await db("users").where({ id }).update(dataToUpdate);
 
-    dataToUpdate.id = id;
+    if (!dataToUpdate.name) dataToUpdate.name = user.name;
+    if (!dataToUpdate.email) dataToUpdate.email = user.email;
 
-    await kafkaProducer.sendMessages(
-      topics.users,
-      [
-        {
-          value: JSON.stringify(dataToUpdate),
-          headers: { action: actions.users.update },
-        },
-      ],
-    );
+    await kafkaProducer.sendMessages(topics.users, [
+      {
+        value: JSON.stringify(dataToUpdate),
+        headers: { action: actions.users.update },
+      },
+    ]);
 
     return res.json({});
   }
