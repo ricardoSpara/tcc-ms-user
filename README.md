@@ -1,6 +1,6 @@
 # **TCC-MS-USER**
 
-O projeto consiste na criacao de usuarios via API.
+O projeto consiste na criação de usuarios via API.
 
 ## **Instruções de instalação**
 
